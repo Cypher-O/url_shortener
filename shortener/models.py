@@ -1,8 +1,4 @@
 from django.db import models
-
-# urlshortener/apps/shortener/models.py
-
-from django.db import models
 from django.utils.crypto import get_random_string
 
 class URL(models.Model):
