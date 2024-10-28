@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-m^^l^^no0vpmnp-&%z=34q&_zi7hsku0o(!h5jv!)4z0yf0syo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -52,6 +52,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'url_shortener.urls'
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -69,6 +75,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'url_shortener.wsgi.application'
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Database
