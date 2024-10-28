@@ -12,4 +12,6 @@
 
 ## Run
 
-python manage.py runserver
+   ```sh
+   python manage.py runserver
+   ```
