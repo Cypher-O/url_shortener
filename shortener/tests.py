@@ -1,7 +1,4 @@
 from django.test import TestCase
-
-# urlshortener/apps/shortener/tests.py
-
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
