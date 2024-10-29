@@ -14,3 +14,4 @@ class URL(models.Model):
 
     def get_absolute_url(self):
         return f"/r/{self.shortened_url}/"
+    

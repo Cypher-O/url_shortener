@@ -1,0 +1,91 @@
+<!-- templates/shortener/url_form.html -->
+{% extends 'shortener/base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h1 class="text-2xl font-bold mb-6 text-center">URL Shortener</h1>
+        
+        <div class="mb-6">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="url">
+                Enter URL to shorten
+            </label>
+            <input 
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="url" 
+                type="url" 
+                placeholder="https://example.com/very/long/url"
+                required
+            >
+        </div>
+        
+        <div class="flex items-center justify-center">
+            <button 
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                onclick="shortenURL()"
+            >
+                Shorten URL
+            </button>
+        </div>
+
+        <!-- Result container -->
+        <div id="result" class="mt-6 hidden">
+            <div class="bg-gray-100 rounded p-4">
+                <h2 class="font-bold text-lg mb-2">Shortened URL:</h2>
+                <div class="flex items-center space-x-2">
+                    <input 
+                        type="text" 
+                        id="shortUrl" 
+                        class="flex-1 p-2 border rounded"
+                        readonly
+                    >
+                    <button 
+                        onclick="copyToClipboard()"
+                        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Copy
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+async function shortenURL() {
+    const urlInput = document.getElementById('url');
+    const resultDiv = document.getElementById('result');
+    const shortUrlInput = document.getElementById('shortUrl');
+
+    try {
+        const response = await fetch('/api/shorten/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                original_url: urlInput.value
+            })
+        });
+
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            shortUrlInput.value = data.data.short_url;
+            resultDiv.classList.remove('hidden');
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+        alert('An error occurred while shortening the URL');
+    }
+}
+
+function copyToClipboard() {
+    const shortUrlInput = document.getElementById('shortUrl');
+    shortUrlInput.select();
+    document.execCommand('copy');
+    alert('URL copied to clipboard!');
+}
+</script>
+{% endblock %}

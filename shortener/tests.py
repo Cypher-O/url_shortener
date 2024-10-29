@@ -14,3 +14,4 @@ class URLShortenerTests(APITestCase):
         url = URL.objects.create(original_url='http://google.com')
         response = self.client.get(reverse('url-redirect', kwargs={'shortened_url': url.shortened_url}))
         self.assertEqual(response.status_code, status.HTTP_302_FOUND)
+        
