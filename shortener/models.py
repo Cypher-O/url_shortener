@@ -6,7 +6,7 @@ class URL(models.Model):
     shortened_url = models.CharField(
         max_length=10,
         unique=True,
-        default=lambda: get_random_string(length=7)
+        default=lambda: get_random_string(length=2)
     )
 
     def __str__(self):
